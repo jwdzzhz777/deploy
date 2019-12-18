@@ -11,5 +11,5 @@ module.exports = {
         cliten: ['x.sh'],
         server: ['y.sh']
     },
-    callback: 'http://wxpusher.zjiecode.com/api/send/message'
+    callback: 'http://wxpusher.zjiecode.com/api/send/message/'
 }
