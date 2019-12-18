@@ -2,10 +2,11 @@ const http = require('http');
 const url = require('url');
 const { spawn } = require('child_process');
 
-const { hostname, port, appToken, uid, router, shell, callback} = require('./config');
+const { hostname, port, appToken, uid, router, shell, callback } = require('./config');
 
 const server = http.createServer((req, res) => {
     const route = url.parse(req.url);
+    console.log(router.cilent);
     if (route.pathname === router.cilent) {
         let sh = spawn('sh', shell.client);
         sh.stdout.on('data', data => console.log(`${data}`));
