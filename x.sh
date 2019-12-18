@@ -14,7 +14,4 @@ fi
 yarn install
 yarn build
 
-id = pm2 pid blog_client
-if [ -z $id ];then
-pm2 start npm --name blog_client --watch -- run start
-fi
+pm2 startOrRestart configpm.json

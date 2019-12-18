@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "blog_client",
+      "cwd": "~/app/chromosome_x",
+      "script": "npm",
+      "args": "run start",
+      "instances": 1,
+      "watch": false,
+      "autorestart": true
+    }
+  ]
+}
