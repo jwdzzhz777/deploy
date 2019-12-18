@@ -1,4 +1,5 @@
 PROJECT_PATH='~/app/chromosome_x'
+CONFIG_PATH='~/deploy/configpm.json'
 
 echo '开始部署'
 
@@ -14,4 +15,5 @@ fi
 yarn install
 yarn build
 
-pm2 startOrRestart configpm.json
+pm2 startOrRestart $CONFIG_PATH
+ls
