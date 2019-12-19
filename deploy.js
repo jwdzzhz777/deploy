@@ -9,7 +9,7 @@ const server = http.createServer((req, res) => {
         console.log('开始客户端部署');
         let sh = spawn('sh', shell.client);
         sh.stdout.on('data', data => console.log(`${data}`));
-        sh.stderr.on('data', data => console.error(`stderr: ${data}`));
+        sh.stderr.on('data', data => console.error(`${data}`));
         sh.on('close', (code) => {
             if (code === 0) {
                 let params = `appToken=${appToken}&content=部署成功&uid=${uid}`;
