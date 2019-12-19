@@ -12,8 +12,8 @@ const server = http.createServer((req, res) => {
         sh.stderr.on('data', data => console.error(`${data}`));
         sh.on('close', (code) => {
             if (+code === 0) {
-                let params = `appToken=${appToken}&content=部署成功&uid=${uid}`;
-                http.get(`${callback}/?${encodeURIComponent(params)}`, () => {
+                let params = new URLSearchParams(`appToken=${appToken}&content=部署成功&uid=${uid}`);
+                http.get(`${callback}/?${params.toString()}`, () => {
                     res.on('data', data => console.log(data));
                     res.on('error', e => console.error(`${e.message}`));
                 });
