@@ -13,7 +13,9 @@ const server = http.createServer((req, res) => {
         sh.on('close', (code) => {
             if (code === 0) {
                 let params = `appToken=${appToken}&content=部署成功&uid=${uid}`;
-                http.get(`${callback}/?${encodeURIComponent(params)}`);
+                http.get(`${callback}/?${encodeURIComponent(params)}`, () => {
+                    res.on('error', e => console.error(`${e.message}`));
+                });
             }
         });
     }
