@@ -6,6 +6,7 @@ const { hostname, port, appToken, uid, router, shell, callback } = require('./co
 const server = http.createServer((req, res) => {
     const route = url.parse(req.url);
     if (route.pathname === router.client) {
+        console.log('开始客户端部署');
         let sh = spawn('sh', shell.client);
         sh.stdout.on('data', data => console.log(`${data}`));
         sh.stderr.on('data', data => console.error(`stderr: ${data}`));
