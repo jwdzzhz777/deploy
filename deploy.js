@@ -14,6 +14,7 @@ const server = http.createServer((req, res) => {
             if (+code === 0) {
                 let params = `appToken=${appToken}&content=部署成功&uid=${uid}`;
                 http.get(`${callback}/?${encodeURIComponent(params)}`, () => {
+                    res.on('data', data => console.log(data));
                     res.on('error', e => console.error(`${e.message}`));
                 });
             }
