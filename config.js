@@ -8,7 +8,7 @@ module.exports = {
         server: '/deploy/y'
     },
     shell: {
-        cliten: ['x.sh'],
+        client: ['x.sh'],
         server: ['y.sh']
     },
     callback: 'http://wxpusher.zjiecode.com/api/send/message/'
