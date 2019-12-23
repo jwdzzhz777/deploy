@@ -2,8 +2,6 @@
 PROJECT_PATH=~/app/chromosome_x
 CONFIG_PATH=~/deploy/configpm.json
 
-echo '开始部署'
-
 if [ -d $PROJECT_PATH ];then
 cd $PROJECT_PATH
 git pull
@@ -17,4 +15,3 @@ yarn install
 yarn build
 
 pm2 startOrRestart $CONFIG_PATH
-ls
