@@ -11,6 +11,9 @@ else
 cd ~/app
 git clone https://github.com/jwdzzhz777/chromosome_y
 cd 'chromosome_y'
+## 初始化数据库
+cat ~/migrations.json > database/config.json
+NODE_ENV=production npx sequelize db:migrate
 fi
 
 ## 重写配置文件
