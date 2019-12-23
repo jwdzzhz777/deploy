@@ -16,7 +16,6 @@ const deploy = (script, cb = ()=>{}) => {
 
 const end = (res) => {
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain', 'charset=utf-8');
     res.end('当前有部署任务进行中\n');
 };
 
@@ -24,6 +23,8 @@ const server = http.createServer((req, res) => {
     const route = url.parse(req.url);
     const isClient = route.pathname === router.client;
     const isServer = route.pathname === router.server;
+
+    res.setHeader('Content-Type', 'text/palin; charset=utf-8');
 
     let sh = null;
     let tip = '';
@@ -53,7 +54,6 @@ const server = http.createServer((req, res) => {
     });
 
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain', 'charset=utf-8');
     res.end('发送部署请求成功\n');
 });
 
