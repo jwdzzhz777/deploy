@@ -20,7 +20,7 @@ const end = (res, msg) => {
     res.end(msg);
 };
 
-const msgPush = (tip) => {
+const msgPush = (res, tip) => {
     let params = new URLSearchParams(`appToken=${appToken}&content=${tip}&uid=${uid}`);
     http.get(`${callback}/?${params.toString()}`, () => {
         res.on('data', data => console.log(data));
@@ -54,7 +54,7 @@ const server = http.createServer((req, res) => {
         sh = spawn('sh', shell.server);
     }
     console.log(tip.start);
-    msgPush(tip.start);
+    msgPush(res, tip.start);
     deploy(sh, (code) => {
         isClient && (client_deploy_state = 'free');
         isServer && (server_deploy_state = 'free');
