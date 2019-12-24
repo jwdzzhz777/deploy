@@ -58,7 +58,7 @@ const server = http.createServer((req, res) => {
         isClient && (client_deploy_state = 'free');
         isServer && (server_deploy_state = 'free');
         if (+code === 0) {
-            msgPush(tip.end);
+            msgPush(res, tip.end);
         }
     });
 
