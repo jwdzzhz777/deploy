@@ -14,9 +14,18 @@ const deploy = (script, cb = ()=>{}) => {
     sh.on('close', (code) => cb(code));
 };
 
-const end = (res) => {
+const end = (res, msg) => {
     res.statusCode = 200;
-    res.end('当前有部署任务进行中\n');
+    res.setHeader('Content-Type', 'text/palin; charset=utf-8');
+    res.end(msg);
+};
+
+const msgPush = (tip) => {
+    let params = new URLSearchParams(`appToken=${appToken}&content=${tip}&uid=${uid}`);
+    http.get(`${callback}/?${params.toString()}`, () => {
+        res.on('data', data => console.log(data));
+        res.on('error', e => console.error(`${e.message}`));
+    });
 };
 
 const server = http.createServer((req, res) => {
@@ -24,37 +33,37 @@ const server = http.createServer((req, res) => {
     const isClient = route.pathname === router.client;
     const isServer = route.pathname === router.server;
 
-    res.setHeader('Content-Type', 'text/palin; charset=utf-8');
 
     let sh = null;
-    let tip = '';
+    let tip = {};
     if (isClient) {
-        if (client_deploy_state === 'pending') return end(res);
+        if (client_deploy_state === 'pending') return end(res, '当前有部署任务进行中\n');
         client_deploy_state = 'pending';
-        console.log('开始客户端部署');
-        tip = '客户端部署成功';
+        tip = {
+            start: '客户端部署开始',
+            end: '客户端部署成功'
+        };
         sh = spawn('sh', shell.client);
     } else if (isServer) {
-        if (server_deploy_state === 'pending') return end(res);
+        if (server_deploy_state === 'pending') return end(res, '当前有部署任务进行中\n');
         server_deploy_state = 'pending';
-        console.log('开始服务端部署');
-        tip = '服务端部署成功';
+        tip = {
+            start: '服务端部署开始',
+            end: '服务端部署成功'
+        };
         sh = spawn('sh', shell.server);
     }
+    console.log(tip.start);
+    msgPush(tip.start);
     deploy(sh, (code) => {
         isClient && (client_deploy_state = 'free');
         isServer && (server_deploy_state = 'free');
         if (+code === 0) {
-            let params = new URLSearchParams(`appToken=${appToken}&content=${tip}&uid=${uid}`);
-            http.get(`${callback}/?${params.toString()}`, () => {
-                res.on('data', data => console.log(data));
-                res.on('error', e => console.error(`${e.message}`));
-            });
+            msgPush(tip.end);
         }
     });
 
-    res.statusCode = 200;
-    res.end('发送部署请求成功\n');
+    end(res, '发送部署请求成功\n');
 });
 
 server.listen(port, hostname, () => {
