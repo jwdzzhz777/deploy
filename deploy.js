@@ -7,8 +7,7 @@ const { hostname, port, appToken, uid, router, shell, callback } = require('./co
 let client_deploy_state = 'free';
 let server_deploy_state = 'free';
 
-const deploy = (script, cb = ()=>{}) => {
-    let sh = spawn('sh', script);
+const deploy = (sh, cb = ()=>{}) => {
     sh.stdout.on('data', data => console.log(`${data}`));
     sh.stderr.on('data', data => console.error(`${data}`));
     sh.on('close', (code) => cb(code));
