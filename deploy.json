@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "deploy",
+      "script": "deploy.js",
+      "instances": 1,
+      "watch": false,
+      "autorestart": true
+    }
+  ]
+}
