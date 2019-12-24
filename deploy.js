@@ -51,7 +51,7 @@ const server = http.createServer((req, res) => {
             end: '服务端部署成功'
         };
         sh = spawn('sh', shell.server);
-    }
+    } else return end(res, 'what is this?\n');
     console.log(tip.start);
     msgPush(res, tip.start);
     deploy(sh, (code) => {
