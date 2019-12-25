@@ -9,7 +9,11 @@ let server_deploy_state = 'free';
 
 const deploy = (sh, cb = ()=>{}) => {
     sh.stdout.on('data', data => console.log(`${data}`));
-    sh.stderr.on('data', data => console.error(`error: aaa ${data}`));
+    sh.stderr.on('data', data => {
+        console.error(`error: aaa ${data}`);
+        // 遇到错误退出
+        sh.stdin.end(2);
+    });
     sh.on('close', (code) => cb(code));
 };
 
@@ -40,7 +44,8 @@ const server = http.createServer((req, res) => {
         client_deploy_state = 'pending';
         tip = {
             start: '客户端部署开始',
-            end: '客户端部署成功'
+            end: '客户端部署成功',
+            error: '客户端部署失败'
         };
         sh = spawn('sh', shell.client);
     } else if (isServer) {
@@ -48,7 +53,8 @@ const server = http.createServer((req, res) => {
         server_deploy_state = 'pending';
         tip = {
             start: '服务端部署开始',
-            end: '服务端部署成功'
+            end: '服务端部署成功',
+            error: '服务端部署失败'
         };
         sh = spawn('sh', shell.server);
     } else return end(res, 'what is this?\n');
@@ -59,6 +65,8 @@ const server = http.createServer((req, res) => {
         isServer && (server_deploy_state = 'free');
         if (+code === 0) {
             msgPush(res, tip.end);
+        } else {
+            msgPush(res, tip.error);
         }
     });
 
