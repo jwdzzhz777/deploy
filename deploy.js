@@ -9,7 +9,7 @@ let server_deploy_state = 'free';
 
 const deploy = (sh, cb = ()=>{}) => {
     sh.stdout.on('data', data => console.log(`${data}`));
-    sh.stderr.on('data', data => console.error(`${data}`));
+    sh.stderr.on('data', data => console.error(`error: aaa ${data}`));
     sh.on('close', (code) => cb(code));
 };
 
@@ -23,7 +23,7 @@ const msgPush = (res, tip) => {
     let params = new URLSearchParams(`appToken=${appToken}&content=${tip}&uid=${uid}`);
     http.get(`${callback}/?${params.toString()}`, () => {
         res.on('data', data => console.log(data));
-        res.on('error', e => console.error(`error: ${e.message}`));
+        res.on('error', e => console.error(`${e.message}`));
     });
 };
 
