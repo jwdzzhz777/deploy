@@ -12,7 +12,7 @@ const deploy = (sh, cb = ()=>{}) => {
     sh.stderr.on('data', data => {
         console.error(`error: aaa ${data}`);
         // 遇到错误退出
-        sh.stdin.end(2);
+        sh.stdin.end();
     });
     sh.on('close', (code) => cb(code));
 };
