@@ -23,7 +23,7 @@ const msgPush = (res, tip) => {
     let params = new URLSearchParams(`appToken=${appToken}&content=${tip}&uid=${uid}`);
     http.get(`${callback}/?${params.toString()}`, () => {
         res.on('data', data => console.log(data));
-        res.on('error', e => console.error(`${e.message}`));
+        res.on('error', e => console.error(`error: ${e.message}`));
     });
 };
 
