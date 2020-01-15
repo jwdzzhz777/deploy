@@ -10,7 +10,7 @@ let server_deploy_state = 'free';
 const deploy = (sh, cb = ()=>{}) => {
     sh.stdout.on('data', data => console.log(`${data}`));
     sh.stderr.on('data', data => {
-        console.error(`error: aaa ${data}`);
+        console.error(`${data}`);
         // 遇到错误退出
         sh.stdin.end();
     });
