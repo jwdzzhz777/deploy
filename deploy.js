@@ -36,7 +36,6 @@ const server = http.createServer((req, res) => {
     const isClient = route.pathname === router.client;
     const isServer = route.pathname === router.server;
 
-
     let sh = null;
     let tip = {};
     if (isClient) {
